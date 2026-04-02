@@ -1,0 +1,291 @@
+{
+  "description": "PDTF 2.0 Test Vectors v0.1",
+  "generatedAt": "2026-04-01T12:00:00Z",
+  "keys": {
+    "seed": "a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebf",
+    "privateKey": "a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebf",
+    "publicKey": "4fd099ccd47d7893dfe9ec24414ecb0d9b5420232aad30d91c465be33cbe65c4",
+    "publicKeyMultibase": "z6Mkjppjwd12cSzdhduNMf3reWgxgkUn7WFM3pnA5f3gFcLj",
+    "did": "did:key:z6Mkjppjwd12cSzdhduNMf3reWgxgkUn7WFM3pnA5f3gFcLj"
+  },
+  "validCredential": {
+    "@context": [
+      "https://www.w3.org/ns/credentials/v2",
+      "https://vocab.pdtf.org/credentials/v1"
+    ],
+    "type": [
+      "VerifiableCredential",
+      "PropertyCredential"
+    ],
+    "id": "urn:uuid:7e4d88a1-3c5f-4b92-9d1e-a6f8c2e09b74",
+    "issuer": "did:key:z6Mkjppjwd12cSzdhduNMf3reWgxgkUn7WFM3pnA5f3gFcLj",
+    "validFrom": "2026-04-01T00:00:00Z",
+    "validUntil": "2027-04-01T00:00:00Z",
+    "credentialSubject": {
+      "id": "urn:pdtf:uprn:100023336956",
+      "type": "EnergyPerformanceCertificate",
+      "property": {
+        "address": "42 Acacia Avenue, Testington, TS1 2AB",
+        "uprn": "100023336956"
+      },
+      "energyEfficiency": {
+        "currentRating": "B",
+        "currentScore": 85,
+        "potentialRating": "A",
+        "potentialScore": 92
+      },
+      "environmentalImpact": {
+        "currentRating": "C",
+        "currentScore": 68
+      },
+      "certificateReference": "EPC-TEST-0001-2026",
+      "validUntil": "2036-03-31"
+    },
+    "evidence": [
+      {
+        "type": "ElectronicRecord",
+        "source": "https://epc.opendatacommunities.org/",
+        "retrievedAt": "2026-04-01T00:00:00Z"
+      }
+    ],
+    "proof": {
+      "type": "DataIntegrityProof",
+      "cryptosuite": "eddsa-jcs-2022",
+      "verificationMethod": "did:key:z6Mkjppjwd12cSzdhduNMf3reWgxgkUn7WFM3pnA5f3gFcLj#z6Mkjppjwd12cSzdhduNMf3reWgxgkUn7WFM3pnA5f3gFcLj",
+      "proofPurpose": "assertionMethod",
+      "created": "2026-04-01T12:00:00Z",
+      "proofValue": "z3rWiyrup6QLyXv6GvY43y8wi1KZdfRodQd2FFs7CBPmg9vRWDUGDGZ68L2bBXpZUrn1dwG7Vz4UGShiaz9kJ1BUM"
+    }
+  },
+  "invalidCredentials": {
+    "expired": {
+      "description": "validUntil in the past (2025-01-01) — signature is valid but credential expired",
+      "vc": {
+        "@context": [
+          "https://www.w3.org/ns/credentials/v2",
+          "https://vocab.pdtf.org/credentials/v1"
+        ],
+        "type": [
+          "VerifiableCredential",
+          "PropertyCredential"
+        ],
+        "id": "urn:uuid:7e4d88a1-3c5f-4b92-9d1e-a6f8c2e09b74",
+        "issuer": "did:key:z6Mkjppjwd12cSzdhduNMf3reWgxgkUn7WFM3pnA5f3gFcLj",
+        "validFrom": "2024-01-01T00:00:00Z",
+        "validUntil": "2025-01-01T00:00:00Z",
+        "credentialSubject": {
+          "id": "urn:pdtf:uprn:100023336956",
+          "type": "EnergyPerformanceCertificate",
+          "property": {
+            "address": "42 Acacia Avenue, Testington, TS1 2AB",
+            "uprn": "100023336956"
+          },
+          "energyEfficiency": {
+            "currentRating": "B",
+            "currentScore": 85,
+            "potentialRating": "A",
+            "potentialScore": 92
+          },
+          "environmentalImpact": {
+            "currentRating": "C",
+            "currentScore": 68
+          },
+          "certificateReference": "EPC-TEST-0001-2026",
+          "validUntil": "2036-03-31"
+        },
+        "evidence": [
+          {
+            "type": "ElectronicRecord",
+            "source": "https://epc.opendatacommunities.org/",
+            "retrievedAt": "2026-04-01T00:00:00Z"
+          }
+        ],
+        "proof": {
+          "type": "DataIntegrityProof",
+          "cryptosuite": "eddsa-jcs-2022",
+          "verificationMethod": "did:key:z6Mkjppjwd12cSzdhduNMf3reWgxgkUn7WFM3pnA5f3gFcLj#z6Mkjppjwd12cSzdhduNMf3reWgxgkUn7WFM3pnA5f3gFcLj",
+          "proofPurpose": "assertionMethod",
+          "created": "2024-01-01T12:00:00Z",
+          "proofValue": "z67RFZjX82FcREBgvs1vJyb3qEPekF5L9hJR63efYawqswzCxeHhUbK7BRvh7HSi5eFfNVCQDb9A4kSxAN7swkYQe"
+        }
+      }
+    },
+    "tamperedSubject": {
+      "description": "credentialSubject.energyEfficiency modified after signing — signature invalid",
+      "vc": {
+        "@context": [
+          "https://www.w3.org/ns/credentials/v2",
+          "https://vocab.pdtf.org/credentials/v1"
+        ],
+        "type": [
+          "VerifiableCredential",
+          "PropertyCredential"
+        ],
+        "id": "urn:uuid:7e4d88a1-3c5f-4b92-9d1e-a6f8c2e09b74",
+        "issuer": "did:key:z6Mkjppjwd12cSzdhduNMf3reWgxgkUn7WFM3pnA5f3gFcLj",
+        "validFrom": "2026-04-01T00:00:00Z",
+        "validUntil": "2027-04-01T00:00:00Z",
+        "credentialSubject": {
+          "id": "urn:pdtf:uprn:100023336956",
+          "type": "EnergyPerformanceCertificate",
+          "property": {
+            "address": "42 Acacia Avenue, Testington, TS1 2AB",
+            "uprn": "100023336956"
+          },
+          "energyEfficiency": {
+            "currentRating": "A",
+            "currentScore": 95,
+            "potentialRating": "A",
+            "potentialScore": 92
+          },
+          "environmentalImpact": {
+            "currentRating": "C",
+            "currentScore": 68
+          },
+          "certificateReference": "EPC-TEST-0001-2026",
+          "validUntil": "2036-03-31"
+        },
+        "evidence": [
+          {
+            "type": "ElectronicRecord",
+            "source": "https://epc.opendatacommunities.org/",
+            "retrievedAt": "2026-04-01T00:00:00Z"
+          }
+        ],
+        "proof": {
+          "type": "DataIntegrityProof",
+          "cryptosuite": "eddsa-jcs-2022",
+          "verificationMethod": "did:key:z6Mkjppjwd12cSzdhduNMf3reWgxgkUn7WFM3pnA5f3gFcLj#z6Mkjppjwd12cSzdhduNMf3reWgxgkUn7WFM3pnA5f3gFcLj",
+          "proofPurpose": "assertionMethod",
+          "created": "2026-04-01T12:00:00Z",
+          "proofValue": "z3rWiyrup6QLyXv6GvY43y8wi1KZdfRodQd2FFs7CBPmg9vRWDUGDGZ68L2bBXpZUrn1dwG7Vz4UGShiaz9kJ1BUM"
+        }
+      }
+    },
+    "noProof": {
+      "description": "proof field removed — cannot verify",
+      "vc": {
+        "@context": [
+          "https://www.w3.org/ns/credentials/v2",
+          "https://vocab.pdtf.org/credentials/v1"
+        ],
+        "type": [
+          "VerifiableCredential",
+          "PropertyCredential"
+        ],
+        "id": "urn:uuid:7e4d88a1-3c5f-4b92-9d1e-a6f8c2e09b74",
+        "issuer": "did:key:z6Mkjppjwd12cSzdhduNMf3reWgxgkUn7WFM3pnA5f3gFcLj",
+        "validFrom": "2026-04-01T00:00:00Z",
+        "validUntil": "2027-04-01T00:00:00Z",
+        "credentialSubject": {
+          "id": "urn:pdtf:uprn:100023336956",
+          "type": "EnergyPerformanceCertificate",
+          "property": {
+            "address": "42 Acacia Avenue, Testington, TS1 2AB",
+            "uprn": "100023336956"
+          },
+          "energyEfficiency": {
+            "currentRating": "B",
+            "currentScore": 85,
+            "potentialRating": "A",
+            "potentialScore": 92
+          },
+          "environmentalImpact": {
+            "currentRating": "C",
+            "currentScore": 68
+          },
+          "certificateReference": "EPC-TEST-0001-2026",
+          "validUntil": "2036-03-31"
+        },
+        "evidence": [
+          {
+            "type": "ElectronicRecord",
+            "source": "https://epc.opendatacommunities.org/",
+            "retrievedAt": "2026-04-01T00:00:00Z"
+          }
+        ]
+      }
+    },
+    "wrongKey": {
+      "description": "signed with a different Ed25519 key — signature invalid against primary public key",
+      "keys": {
+        "seed": "c0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedf",
+        "privateKey": "c0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedf",
+        "publicKey": "dde3bccec7f3a66a1115f45d720f4dc135c3ae7c4e22dca38fdb1efd6a495ff8",
+        "publicKeyMultibase": "z6MkuPRZNRtUkrhBZ1L119iGW2rmWNhPiqovUGDfhSzBDC1D",
+        "did": "did:key:z6MkuPRZNRtUkrhBZ1L119iGW2rmWNhPiqovUGDfhSzBDC1D"
+      },
+      "vc": {
+        "@context": [
+          "https://www.w3.org/ns/credentials/v2",
+          "https://vocab.pdtf.org/credentials/v1"
+        ],
+        "type": [
+          "VerifiableCredential",
+          "PropertyCredential"
+        ],
+        "id": "urn:uuid:7e4d88a1-3c5f-4b92-9d1e-a6f8c2e09b74",
+        "issuer": "did:key:z6Mkjppjwd12cSzdhduNMf3reWgxgkUn7WFM3pnA5f3gFcLj",
+        "validFrom": "2026-04-01T00:00:00Z",
+        "validUntil": "2027-04-01T00:00:00Z",
+        "credentialSubject": {
+          "id": "urn:pdtf:uprn:100023336956",
+          "type": "EnergyPerformanceCertificate",
+          "property": {
+            "address": "42 Acacia Avenue, Testington, TS1 2AB",
+            "uprn": "100023336956"
+          },
+          "energyEfficiency": {
+            "currentRating": "B",
+            "currentScore": 85,
+            "potentialRating": "A",
+            "potentialScore": 92
+          },
+          "environmentalImpact": {
+            "currentRating": "C",
+            "currentScore": 68
+          },
+          "certificateReference": "EPC-TEST-0001-2026",
+          "validUntil": "2036-03-31"
+        },
+        "evidence": [
+          {
+            "type": "ElectronicRecord",
+            "source": "https://epc.opendatacommunities.org/",
+            "retrievedAt": "2026-04-01T00:00:00Z"
+          }
+        ],
+        "proof": {
+          "type": "DataIntegrityProof",
+          "cryptosuite": "eddsa-jcs-2022",
+          "verificationMethod": "did:key:z6MkuPRZNRtUkrhBZ1L119iGW2rmWNhPiqovUGDfhSzBDC1D#z6MkuPRZNRtUkrhBZ1L119iGW2rmWNhPiqovUGDfhSzBDC1D",
+          "proofPurpose": "assertionMethod",
+          "created": "2026-04-01T12:00:00Z",
+          "proofValue": "z3ridxw9QqGD2UWdjT3FfHAZnEMdqLkBzCYK1bRTV5AXeS72YuTp6WvAbo7eppYBJortcuSN49mpFTYxYPXzJ9jpE"
+        }
+      }
+    }
+  },
+  "didKeyPairs": [
+    {
+      "publicKeyHex": "4b5f52db17ebdeb555101922e89beac9b43e864086b02e4529951d7f491f0cfa",
+      "multibase": "z6MkjXUvkV2TxYSZ3ZXhTQCX6VnXT11pqhxtt9tLmY7CkW5P",
+      "did": "did:key:z6MkjXUvkV2TxYSZ3ZXhTQCX6VnXT11pqhxtt9tLmY7CkW5P"
+    },
+    {
+      "publicKeyHex": "0a3846d78e136ea8b4ebbec0fc035b25e776bf9e4e802401ef2bd5150dfb48bb",
+      "multibase": "z6Mkf99toGFf2gGge9QVYEBhcLie74PpiAjC4kY5jQZLvX6i",
+      "did": "did:key:z6Mkf99toGFf2gGge9QVYEBhcLie74PpiAjC4kY5jQZLvX6i"
+    },
+    {
+      "publicKeyHex": "003e99760f1fb2c3e90fff86f6870fbed0ae487633a3acd1078116c8f059bffe",
+      "multibase": "z6MkeUDQfK6Jeex1Qyx7t5RGTEndCKcEHeGGRKzuDVNp7x6Z",
+      "did": "did:key:z6MkeUDQfK6Jeex1Qyx7t5RGTEndCKcEHeGGRKzuDVNp7x6Z"
+    },
+    {
+      "publicKeyHex": "871b89b70ed28ea823c34a1374af4fffd184e1901b09c6a3c93c94a5b733ff03",
+      "multibase": "z6MkoYfSSKr5GMCvdTXXU2bzP5dzH85qUDgLgxEEbrxDsw6S",
+      "did": "did:key:z6MkoYfSSKr5GMCvdTXXU2bzP5dzH85qUDgLgxEEbrxDsw6S"
+    }
+  ]
+}

@@ -98,6 +98,18 @@ export interface ServiceEndpoint {
   serviceEndpoint: string | string[] | Record<string, unknown>;
 }
 
+// ─── DID Storage ────────────────────────────────────────────────────────────
+
+/** Pluggable storage backend for DID documents */
+export interface DidStorage {
+  /** Write a DID document to storage */
+  put(path: string, document: DidDocument): Promise<void>;
+  /** Read a DID document */
+  get(path: string): Promise<DidDocument | null>;
+  /** Delete a DID document */
+  delete(path: string): Promise<void>;
+}
+
 // ─── Key Management ─────────────────────────────────────────────────────────
 
 export type KeyCategory = 'adapter' | 'user' | 'platform' | 'organisation';

@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "description": "PDTF 2.0 core utilities — signing, verification, DIDs, status lists, TIR",
   "type": "module",
+  "bin": {
+    "pdtf": "./dist/cli/index.js"
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
