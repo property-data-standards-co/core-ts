@@ -1,1 +1,0 @@
-{"version":3,"file":"did-web.d.ts","sourceRoot":"","sources":["../../src/did/did-web.ts"],"names":[],"mappings":"AAAA;;;;;;;;GAQG;AACH,OAAO,KAAK,EAAE,WAAW,EAAE,MAAM,aAAa,CAAC;AAE/C;;;;;;GAMG;AACH,wBAAsB,aAAa,CACjC,GAAG,EAAE,MAAM,EACX,OAAO,GAAE,OAAO,KAAwB,GACvC,OAAO,CAAC,WAAW,CAAC,CAwBtB;AAED;;GAEG;AACH,wBAAgB,WAAW,CAAC,GAAG,EAAE,MAAM,GAAG,MAAM,CAU/C"}
