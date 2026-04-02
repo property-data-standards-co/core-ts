@@ -1,0 +1,54 @@
+{
+  "name": "@pdtf/core",
+  "version": "0.1.0",
+  "description": "PDTF 2.0 core utilities — signing, verification, DIDs, status lists, TIR",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./keys": "./dist/keys/index.js",
+    "./signer": "./dist/signer/index.js",
+    "./validator": "./dist/validator/index.js",
+    "./did": "./dist/did/index.js",
+    "./status": "./dist/status/index.js",
+    "./tir": "./dist/tir/index.js"
+  },
+  "typesVersions": {
+    "*": {
+      "keys": ["dist/keys/index.d.ts"],
+      "signer": ["dist/signer/index.d.ts"],
+      "validator": ["dist/validator/index.d.ts"],
+      "did": ["dist/did/index.d.ts"],
+      "status": ["dist/status/index.d.ts"],
+      "tir": ["dist/tir/index.d.ts"]
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src/",
+    "clean": "rm -rf dist/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/property-data-standards-co/pdtf-core.git"
+  },
+  "author": "Ed Molyneux / Moverly",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@noble/curves": "^1.8.0",
+    "@noble/hashes": "^1.7.0",
+    "json-canonicalize": "^1.0.6",
+    "multiformats": "^13.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}
