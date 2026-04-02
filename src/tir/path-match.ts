@@ -21,10 +21,29 @@ export function matchPath(authorisedPath: string, credentialPath: string): boole
   // Exact match
   if (authorisedPath === credentialPath) return true;
 
-  // Wildcard match — authorised path ends with /*
-  if (authorisedPath.endsWith('/*')) {
-    const prefix = authorisedPath.slice(0, -1); // Remove the *
-    return credentialPath.startsWith(prefix);
+  // Split into entity:path parts
+  const colonIdx = authorisedPath.indexOf(':');
+  if (colonIdx === -1) return false;
+
+  const patEntity = authorisedPath.slice(0, colonIdx);
+  const patPath = authorisedPath.slice(colonIdx + 1);
+
+  const credColonIdx = credentialPath.indexOf(':');
+  if (credColonIdx === -1) return false;
+
+  const credEntity = credentialPath.slice(0, credColonIdx);
+
+  // Entity must match
+  if (patEntity !== credEntity) return false;
+
+  // Entity:* matches everything under that entity
+  if (patPath === '*') return true;
+
+  // Wildcard match — path part ends with /*
+  if (patPath.endsWith('/*')) {
+    const prefix = patPath.slice(0, -1); // Remove the *  → keeps the /
+    const credPath = credentialPath.slice(credColonIdx + 1);
+    return credPath.startsWith(prefix);
   }
 
   return false;
