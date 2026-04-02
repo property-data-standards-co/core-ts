@@ -149,6 +149,17 @@ export class VcValidator {
       const vmUri = vc.proof.verificationMethod;
       const didPart = vmUri.split('#')[0]!;
 
+      // FIX 1: Issuer binding — vc.issuer must match proof DID
+      const issuerDid = typeof vc.issuer === 'string' ? vc.issuer : vc.issuer.id;
+      if (issuerDid !== didPart) {
+        return {
+          passed: false,
+          errors: [
+            `Issuer DID '${issuerDid}' does not match proof verification method DID '${didPart}'`,
+          ],
+        };
+      }
+
       const didDoc = await options.didResolver.resolve(didPart);
 
       // Find the verification method in the DID document
@@ -160,6 +171,27 @@ export class VcValidator {
         return {
           passed: false,
           errors: [`Verification method not found in DID document: ${vmUri}`],
+        };
+      }
+
+      // FIX 4: Check that the verification method is listed in assertionMethod
+      const assertionMethods = didDoc.assertionMethod;
+      if (!assertionMethods || assertionMethods.length === 0) {
+        return {
+          passed: false,
+          errors: ['DID document has no assertionMethod — cannot verify proof purpose'],
+        };
+      }
+      const vmInAssertion = assertionMethods.some(am => {
+        if (typeof am === 'string') {
+          return am === vmUri;
+        }
+        return am.id === vmUri;
+      });
+      if (!vmInAssertion) {
+        return {
+          passed: false,
+          errors: [`Verification method '${vmUri}' is not listed in assertionMethod`],
         };
       }
 

@@ -235,7 +235,7 @@ for (const v of tirVectors) {
 // ── Assemble output ─────────────────────────────────────────────────────────
 
 const vectors = {
-  generated: new Date().toISOString(),
+  generated: '2026-01-01T00:00:00.000Z',
   generator: '@pdtf/core v0.1.0',
 
   keys: {
