@@ -15,7 +15,7 @@ import type {
   VerifiableCredential,
 } from '../types.js';
 
-const PDTF_CONTEXT = 'https://propdata.org.uk/credentials/v2';
+const PDTF_CONTEXT = 'https://trust.propdata.org.uk/ns/pdtf/v2';
 const W3C_VC_CONTEXT = 'https://www.w3.org/ns/credentials/v2';
 
 export interface BuildVcOptions {

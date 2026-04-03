@@ -49,7 +49,7 @@ async function makeSignedVc(provider: TestKeyProvider, keyId: string = 'test-key
   const document = {
     '@context': [
       'https://www.w3.org/ns/credentials/v2',
-      'https://propdata.org.uk/credentials/v2',
+      'https://trust.propdata.org.uk/ns/pdtf/v2',
     ],
     type: ['VerifiableCredential', 'PropertyDataCredential'],
     id: 'urn:uuid:test-vc-001',
