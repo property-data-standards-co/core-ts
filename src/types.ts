@@ -147,10 +147,30 @@ export interface KeyProvider {
   resolveDidKey(keyId: string): Promise<string>;
 }
 
-// ─── TIR ────────────────────────────────────────────────────────────────────
+// ─── Trust Federation ──────────────────────────────────────────────────────────
 
 export type TrustLevel = 'rootIssuer' | 'trustedProxy' | 'accountProvider';
 export type IssuerStatus = 'active' | 'deprecated' | 'revoked' | 'planned';
+
+export interface TrustMark {
+  trustLevel: TrustLevel;
+  status: IssuerStatus;
+  authorisedPaths: string[];
+  [key: string]: unknown;
+}
+
+export interface TrustResolutionResult {
+  trusted: boolean;
+  trustLevel?: TrustLevel;
+  status?: IssuerStatus;
+  pathsCovered: string[];
+  uncoveredPaths: string[];
+  warnings: string[];
+  trustMark?: TrustMark;
+  issuerSlug?: string;
+}
+
+// ─── Legacy TIR (Bootstrap fallback) ────────────────────────────────────────
 
 export interface TirIssuerEntry {
   slug: string;
@@ -181,16 +201,6 @@ export interface TirRegistry {
   lastUpdated: string;
   issuers: Record<string, TirIssuerEntry>;
   userAccountProviders: Record<string, TirAccountProvider>;
-}
-
-export interface TirVerificationResult {
-  trusted: boolean;
-  issuerSlug?: string;
-  trustLevel?: TrustLevel;
-  status?: IssuerStatus;
-  pathsCovered: string[];
-  uncoveredPaths: string[];
-  warnings: string[];
 }
 
 // ─── Status List ────────────────────────────────────────────────────────────

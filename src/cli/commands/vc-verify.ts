@@ -3,7 +3,7 @@
  */
 import { readFileSync } from 'node:fs';
 import { DidResolver } from '../../did/resolver.js';
-import { TirClient } from '../../tir/client.js';
+import { BootstrapTrustResolver } from '../../federation/bootstrap-resolver.js';
 import { VcValidator } from '../../validator/vc-validator.js';
 import type { VerifiableCredential, TirRegistry } from '../../types.js';
 
@@ -62,17 +62,17 @@ export async function vcVerify(args: string[]): Promise<void> {
   // Set up options
   const didResolver = new DidResolver();
 
-  let tirClient: TirClient | undefined;
+  let trustResolver: BootstrapTrustResolver | undefined;
   if (tirPath) {
     try {
       const tirRaw = readFileSync(tirPath, 'utf-8');
       const tirData = JSON.parse(tirRaw) as TirRegistry;
-      // Create a TIR client that returns the local registry
-      tirClient = new TirClient({
+      // Create a trust resolver that returns the local registry
+      trustResolver = new BootstrapTrustResolver({
         fetchFn: (async () => new Response(JSON.stringify(tirData))) as unknown as typeof fetch,
       });
     } catch (err) {
-      console.error(`\x1b[31mError:\x1b[0m Could not read TIR: ${(err as Error).message}`);
+      console.error(`\x1b[31mError:\x1b[0m Could not read local registry: ${(err as Error).message}`);
       process.exitCode = 1;
       return;
     }
@@ -82,7 +82,7 @@ export async function vcVerify(args: string[]): Promise<void> {
   const validator = new VcValidator();
   const result = await validator.validate(vc, {
     didResolver,
-    tirClient,
+    trustResolver,
     skipStatusCheck: true, // No network for status lists in CLI
   });
 
