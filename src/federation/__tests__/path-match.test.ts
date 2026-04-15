@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { matchPath, checkPathCoverage } from '../path-match.js';
 
-describe('TIR path matching', () => {
+describe('Federation path matching', () => {
   it('matches exact paths', () => {
     expect(matchPath(
       'Property:/energyEfficiency/certificate',
@@ -43,7 +43,7 @@ describe('TIR path matching', () => {
   });
 });
 
-describe('TIR path coverage', () => {
+describe('Federation path coverage', () => {
   it('reports full coverage', () => {
     const result = checkPathCoverage(
       ['Property:/energyEfficiency/*', 'Property:/floodRisk/*'],

@@ -5,12 +5,12 @@
  *   import { VcSigner } from '@pdtf/core/signer'
  *   import { DidResolver } from '@pdtf/core/did'
  *   import { checkStatus } from '@pdtf/core/status'
- *   import { BootstrapTrustResolver, OpenIdFederationResolver } from '@pdtf/core/federation'
+ *   import { FederationRegistryResolver, OpenIdFederationResolver } from '@pdtf/core/federation'
  *   import { FirestoreKeyProvider } from '@pdtf/core/keys'
  *   import { VcValidator } from '@pdtf/core/validator'
  *
  * Or import everything from the root:
- *   import { VcSigner, DidResolver, BootstrapTrustResolver } from '@pdtf/core'
+ *   import { VcSigner, DidResolver, FederationRegistryResolver } from '@pdtf/core'
  */
 
 // Re-export all public APIs

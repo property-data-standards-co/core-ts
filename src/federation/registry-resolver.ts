@@ -1,8 +1,8 @@
 import { checkPathCoverage } from './path-match.js';
 import type { TrustResolver } from './resolver.js';
-import type { TirRegistry, TrustResolutionResult, TrustMark } from '../types.js';
+import type { FederationRegistry, TrustResolutionResult, TrustMark } from '../types.js';
 
-export interface BootstrapTrustResolverOptions {
+export interface FederationRegistryResolverOptions {
   registryUrl?: string;
   ttlMs?: number;
   maxStaleMs?: number;
@@ -11,21 +11,21 @@ export interface BootstrapTrustResolverOptions {
 }
 
 interface CacheState {
-  registry: TirRegistry;
+  registry: FederationRegistry;
   fetchedAt: number;
   etag?: string;
 }
 
-const DEFAULT_REGISTRY_URL = 'https://tir.moverly.com/v1/registry';
+const DEFAULT_REGISTRY_URL = 'https://registry.moverly.com/v1/federation';
 
-export class BootstrapTrustResolver implements TrustResolver {
+export class FederationRegistryResolver implements TrustResolver {
   private cache: CacheState | null = null;
   private readonly registryUrl: string;
   private readonly ttlMs: number;
   private readonly maxStaleMs: number;
   private readonly fetchFn: typeof fetch;
 
-  constructor(options: BootstrapTrustResolverOptions = {}) {
+  constructor(options: FederationRegistryResolverOptions = {}) {
     this.registryUrl = options.registryUrl ?? DEFAULT_REGISTRY_URL;
     this.ttlMs = options.ttlMs ?? 3_600_000;
     this.maxStaleMs = options.maxStaleMs ?? 86_400_000;
@@ -37,7 +37,7 @@ export class BootstrapTrustResolver implements TrustResolver {
     const paths = credentialPaths ?? [];
 
     let foundSlug: string | undefined;
-    let foundEntry: TirRegistry['issuers'][string] | undefined;
+    let foundEntry: FederationRegistry['issuers'][string] | undefined;
 
     for (const [slug, entry] of Object.entries(registry.issuers)) {
       if (entry.did === issuerDid) {
@@ -52,7 +52,7 @@ export class BootstrapTrustResolver implements TrustResolver {
         trusted: false,
         pathsCovered: [],
         uncoveredPaths: paths,
-        warnings: [`Issuer DID not found in bootstrap registry: ${issuerDid}`],
+        warnings: [`Issuer DID not found in federation registry: ${issuerDid}`],
       };
     }
 
@@ -130,7 +130,7 @@ export class BootstrapTrustResolver implements TrustResolver {
     };
   }
 
-  private async getRegistry(): Promise<TirRegistry> {
+  private async getRegistry(): Promise<FederationRegistry> {
     if (this.cache && Date.now() - this.cache.fetchedAt < this.ttlMs) {
       return this.cache.registry;
     }
@@ -146,7 +146,7 @@ export class BootstrapTrustResolver implements TrustResolver {
     }
   }
 
-  private async fetchRegistry(): Promise<TirRegistry> {
+  private async fetchRegistry(): Promise<FederationRegistry> {
     const headers: Record<string, string> = { 'Accept': 'application/json' };
     if (this.cache?.etag) {
       headers['If-None-Match'] = this.cache.etag;
@@ -163,10 +163,10 @@ export class BootstrapTrustResolver implements TrustResolver {
     }
 
     if (!response.ok) {
-      throw new Error(`Bootstrap registry fetch failed: HTTP ${response.status}`);
+      throw new Error(`Federation registry fetch failed: HTTP ${response.status}`);
     }
 
-    const registry = await response.json() as TirRegistry;
+    const registry = await response.json() as FederationRegistry;
     const etag = response.headers.get('etag') ?? undefined;
 
     this.cache = { registry, fetchedAt: Date.now(), etag };

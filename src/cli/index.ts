@@ -16,18 +16,18 @@ pdtf — PDTF 2.0 CLI
 Usage: pdtf <command> [subcommand] [options]
 
 Commands:
-  tir validate [path]                  Validate a TIR registry.json file
+  federation validate [path]           Validate a federation registry.json file
   org init --domain <d> --output <dir> Generate org DID document + Ed25519 key pair
   vc inspect <file>                    Decode and pretty-print a Verifiable Credential
-  vc verify <file> [--tir <registry>]  Verify a VC through the 4-stage pipeline
+  vc verify <file> [--registry <file>] Verify a VC through the 4-stage pipeline
   did resolve <did>                    Resolve a DID and print the document
   help                                 Show this help message
 
 Examples:
-  pdtf tir validate ./registry.json
+  pdtf federation validate ./registry.json
   pdtf org init --domain example.com --output ./keys
   pdtf vc inspect ./credential.json
-  pdtf vc verify ./credential.json --tir ./registry.json
+  pdtf vc verify ./credential.json --registry ./registry.json
   pdtf did resolve did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK
 `);
 }
@@ -39,13 +39,13 @@ async function main(): Promise<void> {
   }
 
   switch (command) {
-    case 'tir': {
+    case 'federation': {
       if (subcommand === 'validate') {
-        const { tirValidate } = await import('./commands/tir-validate.js');
-        await tirValidate(args.slice(2));
+        const { federationValidate } = await import('./commands/federation-validate.js');
+        await federationValidate(args.slice(2));
       } else {
-        console.error(`Unknown tir subcommand: ${subcommand ?? '(none)'}`);
-        console.error('Available: tir validate [path]');
+        console.error(`Unknown federation subcommand: ${subcommand ?? '(none)'}`);
+        console.error('Available: federation validate [path]');
         process.exitCode = 1;
       }
       break;

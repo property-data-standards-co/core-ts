@@ -3,7 +3,7 @@
  *
  * Stage 1: Structure — W3C VC 2.0 envelope validation
  * Stage 2: Signature — DataIntegrityProof verification (eddsa-jcs-2022)
- * Stage 3: TIR — Issuer authorization check against Trusted Issuer Registry
+ * Stage 3: Trust — Issuer authorization check against Federation Registry
  * Stage 4: Status — Revocation/suspension check via Bitstring Status List
  *
  * Each stage can fail independently. The pipeline runs all stages and
@@ -35,7 +35,7 @@ export interface ValidationResult {
   stages: {
     structure: StageResult;
     signature: StageResult;
-    tir: StageResult;
+    trust: StageResult;
     status: StageResult;
   };
   /** Aggregated warnings from all stages */
@@ -66,14 +66,14 @@ export class VcValidator {
     const signature = await this.validateSignature(vc, options);
 
     // Stage 3: Trust Federation
-    const tir = await this.validateTrust(vc, options, warnings);
+    const trust = await this.validateTrust(vc, options, warnings);
 
     // Stage 4: Status
     const status = await this.validateStatus(vc, options);
 
     return {
-      valid: structure.passed && signature.passed && tir.passed && status.passed,
-      stages: { structure, signature, tir, status },
+      valid: structure.passed && signature.passed && trust.passed && status.passed,
+      stages: { structure, signature, trust, status },
       warnings,
     };
   }

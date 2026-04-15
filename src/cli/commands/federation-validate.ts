@@ -1,13 +1,13 @@
 /**
- * pdtf tir validate — validate a TIR registry.json file
+ * pdtf federation validate — validate a federation registry.json file
  */
 import { readFileSync } from 'node:fs';
-import type { TirRegistry, TrustLevel, IssuerStatus } from '../../types.js';
+import type { FederationRegistry, TrustLevel, IssuerStatus } from '../../types.js';
 
 const VALID_TRUST_LEVELS = new Set<string>(['rootIssuer', 'trustedProxy', 'accountProvider']);
 const VALID_STATUSES = new Set<string>(['active', 'deprecated', 'revoked', 'planned']);
 
-export async function tirValidate(args: string[]): Promise<void> {
+export async function federationValidate(args: string[]): Promise<void> {
   const path = args[0] ?? 'registry.json';
 
   let raw: string;
@@ -19,9 +19,9 @@ export async function tirValidate(args: string[]): Promise<void> {
     return;
   }
 
-  let registry: TirRegistry;
+  let registry: FederationRegistry;
   try {
-    registry = JSON.parse(raw) as TirRegistry;
+    registry = JSON.parse(raw) as FederationRegistry;
   } catch {
     console.error(`\x1b[31mError:\x1b[0m Invalid JSON in ${path}`);
     process.exitCode = 1;

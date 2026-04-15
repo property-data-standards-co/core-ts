@@ -170,9 +170,9 @@ export interface TrustResolutionResult {
   issuerSlug?: string;
 }
 
-// ─── Legacy TIR (Bootstrap fallback) ────────────────────────────────────────
+// ─── Federation Registry ────────────────────────────────────────────────────
 
-export interface TirIssuerEntry {
+export interface FederationIssuerEntry {
   slug: string;
   did: string;
   name: string;
@@ -186,7 +186,7 @@ export interface TirIssuerEntry {
   [key: string]: unknown;
 }
 
-export interface TirAccountProvider {
+export interface FederationAccountProvider {
   slug: string;
   did: string;
   name: string;
@@ -196,11 +196,11 @@ export interface TirAccountProvider {
   [key: string]: unknown;
 }
 
-export interface TirRegistry {
+export interface FederationRegistry {
   version: string;
   lastUpdated: string;
-  issuers: Record<string, TirIssuerEntry>;
-  userAccountProviders: Record<string, TirAccountProvider>;
+  issuers: Record<string, FederationIssuerEntry>;
+  userAccountProviders: Record<string, FederationAccountProvider>;
 }
 
 // ─── Status List ────────────────────────────────────────────────────────────
