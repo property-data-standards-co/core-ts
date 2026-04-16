@@ -7,7 +7,7 @@ describe('PDTF URN validation', () => {
     'urn:pdtf:titleNumber:NGL123456',
     'urn:pdtf:titleNumber:AGL1',
     'urn:pdtf:unregisteredTitle:a1b2c3d4-e5f6-7890-abcd-ef1234567890',
-    'urn:pdtf:ownership:12345678-1234-1234-1234-123456789abc',
+    'urn:pdtf:capacity:12345678-1234-1234-1234-123456789abc',
     'urn:pdtf:representation:12345678-1234-1234-1234-123456789abc',
     'urn:pdtf:consent:12345678-1234-1234-1234-123456789abc',
     'urn:pdtf:offer:12345678-1234-1234-1234-123456789abc',
@@ -24,7 +24,7 @@ describe('PDTF URN validation', () => {
     'urn:pdtf:unknown:123',         // unknown type
     'urn:pdtf:uprn:notanumber',     // UPRN must be numeric
     'urn:pdtf:titleNumber:123',     // must start with letters
-    'urn:pdtf:ownership:not-a-uuid', // invalid UUID
+    'urn:pdtf:capacity:not-a-uuid', // invalid UUID
     'did:key:z6Mk...',             // not a URN at all
     '',                             // empty
   ];

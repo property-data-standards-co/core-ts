@@ -5,7 +5,7 @@
  * - urn:pdtf:uprn:{uprn}
  * - urn:pdtf:titleNumber:{number}
  * - urn:pdtf:unregisteredTitle:{uuid}
- * - urn:pdtf:ownership:{uuid}
+ * - urn:pdtf:capacity:{uuid}
  * - urn:pdtf:representation:{uuid}
  * - urn:pdtf:consent:{uuid}
  * - urn:pdtf:offer:{uuid}
