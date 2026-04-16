@@ -19,12 +19,24 @@
   },
   "typesVersions": {
     "*": {
-      "keys": ["dist/keys/index.d.ts"],
-      "signer": ["dist/signer/index.d.ts"],
-      "validator": ["dist/validator/index.d.ts"],
-      "did": ["dist/did/index.d.ts"],
-      "status": ["dist/status/index.d.ts"],
-      "tir": ["dist/tir/index.d.ts"]
+      "keys": [
+        "dist/keys/index.d.ts"
+      ],
+      "signer": [
+        "dist/signer/index.d.ts"
+      ],
+      "validator": [
+        "dist/validator/index.d.ts"
+      ],
+      "did": [
+        "dist/did/index.d.ts"
+      ],
+      "status": [
+        "dist/status/index.d.ts"
+      ],
+      "tir": [
+        "dist/tir/index.d.ts"
+      ]
     }
   },
   "scripts": {
@@ -54,7 +66,7 @@
     "better-sqlite3": "^11.8.1"
   },
   "devDependencies": {
-    "@types/better-sqlite3": "^7.6.12",
+    "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^22.0.0",
     "better-sqlite3": "^11.8.1",
     "typescript": "^5.7.0",

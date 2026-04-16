@@ -147,12 +147,32 @@ export interface KeyProvider {
   resolveDidKey(keyId: string): Promise<string>;
 }
 
-// ─── TIR ────────────────────────────────────────────────────────────────────
+// ─── Trust Federation ──────────────────────────────────────────────────────────
 
 export type TrustLevel = 'rootIssuer' | 'trustedProxy' | 'accountProvider';
 export type IssuerStatus = 'active' | 'deprecated' | 'revoked' | 'planned';
 
-export interface TirIssuerEntry {
+export interface TrustMark {
+  trustLevel: TrustLevel;
+  status: IssuerStatus;
+  authorisedPaths: string[];
+  [key: string]: unknown;
+}
+
+export interface TrustResolutionResult {
+  trusted: boolean;
+  trustLevel?: TrustLevel;
+  status?: IssuerStatus;
+  pathsCovered: string[];
+  uncoveredPaths: string[];
+  warnings: string[];
+  trustMark?: TrustMark;
+  issuerSlug?: string;
+}
+
+// ─── Federation Registry ────────────────────────────────────────────────────
+
+export interface FederationIssuerEntry {
   slug: string;
   did: string;
   name: string;
@@ -166,7 +186,7 @@ export interface TirIssuerEntry {
   [key: string]: unknown;
 }
 
-export interface TirAccountProvider {
+export interface FederationAccountProvider {
   slug: string;
   did: string;
   name: string;
@@ -176,21 +196,11 @@ export interface TirAccountProvider {
   [key: string]: unknown;
 }
 
-export interface TirRegistry {
+export interface FederationRegistry {
   version: string;
   lastUpdated: string;
-  issuers: Record<string, TirIssuerEntry>;
-  userAccountProviders: Record<string, TirAccountProvider>;
-}
-
-export interface TirVerificationResult {
-  trusted: boolean;
-  issuerSlug?: string;
-  trustLevel?: TrustLevel;
-  status?: IssuerStatus;
-  pathsCovered: string[];
-  uncoveredPaths: string[];
-  warnings: string[];
+  issuers: Record<string, FederationIssuerEntry>;
+  userAccountProviders: Record<string, FederationAccountProvider>;
 }
 
 // ─── Status List ────────────────────────────────────────────────────────────

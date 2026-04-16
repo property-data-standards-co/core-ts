@@ -1,5 +1,5 @@
 /**
- * Entity:path matching for TIR authorisation.
+ * Entity:path matching for federation registry authorisation.
  *
  * Path format: EntityType:/json/pointer/path
  * Wildcards: only as final segment (e.g. Title:/registerExtract/*)
@@ -13,7 +13,7 @@
 /**
  * Check if a credential path is covered by an authorised path.
  *
- * @param authorisedPath - Path from TIR entry (may contain trailing wildcard)
+ * @param authorisedPath - Path from federation registry entry (may contain trailing wildcard)
  * @param credentialPath - Path to check (no wildcards)
  * @returns true if the credential path is covered
  */

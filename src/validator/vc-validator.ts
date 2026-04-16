@@ -3,25 +3,24 @@
  *
  * Stage 1: Structure — W3C VC 2.0 envelope validation
  * Stage 2: Signature — DataIntegrityProof verification (eddsa-jcs-2022)
- * Stage 3: TIR — Issuer authorization check against Trusted Issuer Registry
+ * Stage 3: Trust — Issuer authorization check against Federation Registry
  * Stage 4: Status — Revocation/suspension check via Bitstring Status List
  *
  * Each stage can fail independently. The pipeline runs all stages and
  * returns a complete result (not short-circuit) so callers can see ALL issues.
  */
 import { verifyProof } from '../signer/proof.js';
-import { verifyIssuer } from '../tir/verify.js';
 import { checkStatus } from '../status/bitstring.js';
 import type { DidResolver } from '../did/resolver.js';
-import type { TirClient } from '../tir/client.js';
-import type { VerifiableCredential, TirVerificationResult } from '../types.js';
+import type { TrustResolver } from '../federation/resolver.js';
+import type { VerifiableCredential, TrustResolutionResult } from '../types.js';
 
 export interface ValidationOptions {
   /** DID resolver for public key lookup */
   didResolver: DidResolver;
-  /** TIR client for issuer authorization. If omitted, Stage 3 is skipped. */
-  tirClient?: TirClient;
-  /** Entity:paths this credential covers (for TIR check). If omitted, TIR path check is skipped. */
+  /** Trust resolver for issuer authorization. If omitted, Stage 3 is skipped. */
+  trustResolver?: TrustResolver;
+  /** Entity:paths this credential covers (for authorization check). If omitted, path check is skipped. */
   credentialPaths?: string[];
   /** Custom fetch for status list retrieval (testing). */
   fetchFn?: typeof fetch;
@@ -36,7 +35,7 @@ export interface ValidationResult {
   stages: {
     structure: StageResult;
     signature: StageResult;
-    tir: StageResult;
+    trust: StageResult;
     status: StageResult;
   };
   /** Aggregated warnings from all stages */
@@ -66,15 +65,15 @@ export class VcValidator {
     // Stage 2: Signature
     const signature = await this.validateSignature(vc, options);
 
-    // Stage 3: TIR
-    const tir = await this.validateTir(vc, options, warnings);
+    // Stage 3: Trust Federation
+    const trust = await this.validateTrust(vc, options, warnings);
 
     // Stage 4: Status
     const status = await this.validateStatus(vc, options);
 
     return {
-      valid: structure.passed && signature.passed && tir.passed && status.passed,
-      stages: { structure, signature, tir, status },
+      valid: structure.passed && signature.passed && trust.passed && status.passed,
+      stages: { structure, signature, trust, status },
       warnings,
     };
   }
@@ -235,12 +234,12 @@ export class VcValidator {
     }
   }
 
-  private async validateTir(
+  private async validateTrust(
     vc: VerifiableCredential,
     options: ValidationOptions,
     warnings: string[],
   ): Promise<StageResult> {
-    if (!options.tirClient) {
+    if (!options.trustResolver) {
       return { passed: true, skipped: true, errors: [] };
     }
 
@@ -251,11 +250,10 @@ export class VcValidator {
     try {
       const issuerDid = typeof vc.issuer === 'string' ? vc.issuer : vc.issuer.id;
 
-      const result: TirVerificationResult = await verifyIssuer({
+      const result: TrustResolutionResult = await options.trustResolver.resolveTrust(
         issuerDid,
-        credentialPaths: options.credentialPaths,
-        tirClient: options.tirClient,
-      });
+        options.credentialPaths
+      );
 
       warnings.push(...result.warnings);
 
@@ -272,7 +270,7 @@ export class VcValidator {
     } catch (err) {
       return {
         passed: false,
-        errors: [`TIR verification error: ${(err as Error).message}`],
+        errors: [`Trust verification error: ${(err as Error).message}`],
       };
     }
   }

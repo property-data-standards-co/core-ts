@@ -3,9 +3,9 @@
  */
 import { readFileSync } from 'node:fs';
 import { DidResolver } from '../../did/resolver.js';
-import { TirClient } from '../../tir/client.js';
+import { FederationRegistryResolver } from '../../federation/registry-resolver.js';
 import { VcValidator } from '../../validator/vc-validator.js';
-import type { VerifiableCredential, TirRegistry } from '../../types.js';
+import type { VerifiableCredential, FederationRegistry } from '../../types.js';
 
 // ANSI
 const GREEN = '\x1b[32m';
@@ -14,11 +14,11 @@ const DIM = '\x1b[2m';
 const YELLOW = '\x1b[33m';
 const RESET = '\x1b[0m';
 
-function parseArgs(args: string[]): { file?: string; tirPath?: string } {
-  const result: { file?: string; tirPath?: string } = {};
+function parseArgs(args: string[]): { file?: string; registryPath?: string } {
+  const result: { file?: string; registryPath?: string } = {};
   for (let i = 0; i < args.length; i++) {
-    if (args[i] === '--tir' && args[i + 1]) {
-      result.tirPath = args[++i];
+    if (args[i] === '--registry' && args[i + 1]) {
+      result.registryPath = args[++i];
     } else if (!result.file) {
       result.file = args[i];
     }
@@ -39,11 +39,11 @@ function stageSuffix(passed: boolean, skipped?: boolean, errors?: string[]): str
 }
 
 export async function vcVerify(args: string[]): Promise<void> {
-  const { file, tirPath } = parseArgs(args);
+  const { file, registryPath } = parseArgs(args);
 
   if (!file) {
     console.error('\x1b[31mError:\x1b[0m <file> argument is required');
-    console.error('Usage: pdtf vc verify <file> [--tir <registry.json>]');
+    console.error('Usage: pdtf vc verify <file> [--registry <registry.json>]');
     process.exitCode = 1;
     return;
   }
@@ -62,17 +62,17 @@ export async function vcVerify(args: string[]): Promise<void> {
   // Set up options
   const didResolver = new DidResolver();
 
-  let tirClient: TirClient | undefined;
-  if (tirPath) {
+  let trustResolver: FederationRegistryResolver | undefined;
+  if (registryPath) {
     try {
-      const tirRaw = readFileSync(tirPath, 'utf-8');
-      const tirData = JSON.parse(tirRaw) as TirRegistry;
-      // Create a TIR client that returns the local registry
-      tirClient = new TirClient({
-        fetchFn: (async () => new Response(JSON.stringify(tirData))) as unknown as typeof fetch,
+      const registryRaw = readFileSync(registryPath, 'utf-8');
+      const registryData = JSON.parse(registryRaw) as FederationRegistry;
+      // Create a trust resolver that returns the local registry
+      trustResolver = new FederationRegistryResolver({
+        fetchFn: (async () => new Response(JSON.stringify(registryData))) as unknown as typeof fetch,
       });
     } catch (err) {
-      console.error(`\x1b[31mError:\x1b[0m Could not read TIR: ${(err as Error).message}`);
+      console.error(`\x1b[31mError:\x1b[0m Could not read local registry: ${(err as Error).message}`);
       process.exitCode = 1;
       return;
     }
@@ -82,7 +82,7 @@ export async function vcVerify(args: string[]): Promise<void> {
   const validator = new VcValidator();
   const result = await validator.validate(vc, {
     didResolver,
-    tirClient,
+    trustResolver,
     skipStatusCheck: true, // No network for status lists in CLI
   });
 
@@ -99,8 +99,8 @@ export async function vcVerify(args: string[]): Promise<void> {
     `${stageSuffix(stages.signature.passed, false, stages.signature.errors)}`
   );
   console.log(
-    `  ${stageIcon(stages.tir.passed, stages.tir.skipped)} TIR` +
-    `${stageSuffix(stages.tir.passed, stages.tir.skipped, stages.tir.errors)}`
+    `  ${stageIcon(stages.trust.passed, stages.trust.skipped)} Trust` +
+    `${stageSuffix(stages.trust.passed, stages.trust.skipped, stages.trust.errors)}`
   );
   console.log(
     `  ${stageIcon(stages.status.passed, stages.status.skipped)} Status` +
