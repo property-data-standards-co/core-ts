@@ -49,8 +49,8 @@ const minimalV3 = {
 describe('decomposeV3ToCredentials', () => {
   it('produces the correct number and types of VCs', () => {
     const vcs = decomposeV3ToCredentials(minimalV3, {
-      transactionDid: 'did:web:moverly.com:transactions:tx-001',
-      issuerDid: 'did:web:moverly.com',
+      transactionDid: 'did:web:platform.example.com:transactions:tx-001',
+      issuerDid: 'did:web:platform.example.com',
     });
 
     const types = vcs.map(vc => vc.type[1]);

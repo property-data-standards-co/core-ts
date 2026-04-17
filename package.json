@@ -50,7 +50,7 @@
     "type": "git",
     "url": "https://github.com/property-data-standards-co/pdtf-core.git"
   },
-  "author": "Ed Molyneux / Moverly",
+  "author": "Ed Molyneux",
   "license": "MIT",
   "engines": {
     "node": ">=20"

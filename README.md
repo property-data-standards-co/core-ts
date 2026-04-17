@@ -242,4 +242,4 @@ npm test
 
 ## License
 
-MIT — Ed Molyneux / Moverly
+MIT — Ed Molyneux

@@ -115,7 +115,7 @@ export interface DidStorage {
 export type KeyCategory = 'adapter' | 'user' | 'platform' | 'organisation';
 
 export interface KeyRecord {
-  /** Key identifier (e.g. 'adapter/moverly-epc/signing-key-1') */
+  /** Key identifier (e.g. 'adapter/pdtf-epc/signing-key-1') */
   keyId: string;
   /** The DID this key resolves to */
   did: string;
