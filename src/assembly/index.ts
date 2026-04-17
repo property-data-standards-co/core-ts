@@ -200,6 +200,9 @@ export function composeV4StateFromGraph(
  * preserved in their original buckets so downstream consumers can still reach
  * them via `v4` escape hatches if needed.
  */
+export { decomposeV3ToCredentials } from './decompose.js';
+export type { DecomposeOptions } from './decompose.js';
+
 export function composeV3StateFromGraph(
   credentials: VerifiableCredential[],
   options: AssemblyOptions = {}
